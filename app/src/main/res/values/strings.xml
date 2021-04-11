@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">MoviesApp</string>
+    <string name="what_are_you_looking_for">What are you looking for?</string>
+    <string name="title_film">Title Film</string>
+    <string name="genre_film">Genre Film</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="_7_5">7.5</string>
+    <string name="en">en</string>
+    <string name="_1945_01_20">1945-01-20</string>
+    <string name="kimetsu_no_yaiba_mugen_train">Kimetsu No Yaiba : Mugen Train</string>
+    <string name="genre">Genre</string>
+    <string name="overview">Overview</string>
+    <string name="companies">Companies</string>
+    <string name="watch_trailer">Watch Trailer</string>
+    <string name="preview">Preview</string>
+    <string name="nama_author">Nama Author</string>
+    <string name="movie_trailer">Movie Trailer</string>
+    <string name="see_all">See All</string>
+</resources>

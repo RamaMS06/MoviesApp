@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black2"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:id="@+id/layout_container_list_genre"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    tools:context=".activity.ListGenreMovies">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway"
+        android:text="Select Your\nFavorite Genre"
+        android:textColor="@color/white"
+        android:textSize="21sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/edt_search_list_genre_movies"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/border_corner_card_view_white"
+        android:cursorVisible="false"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="15dp"
+        android:drawableTint="@color/white"
+        android:enabled="true"
+        android:focusable="false"
+        android:focusableInTouchMode="true"
+        android:fontFamily="@font/open_sans"
+        android:hint="@string/what_are_you_looking_for"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white_transparent"
+        android:textSize="13sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_list_genre_movies"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="25dp"
+        android:layoutAnimation="@anim/layout_animation"/>
+
+
+</LinearLayout>
