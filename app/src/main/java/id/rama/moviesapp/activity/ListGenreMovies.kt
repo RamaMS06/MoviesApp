@@ -3,11 +3,10 @@ package id.rama.moviesapp.activity
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.appcompat.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,7 +20,7 @@ import id.rama.moviesapp.utils.Utilities
 import id.rama.moviesapp.viewmodel.ViewModelListGenre
 import id.rama.moviesapp.viewmodelfactory.ViewModelFactoryListGenre
 import kotlinx.android.synthetic.main.activity_list_genre_movies.*
-import kotlinx.android.synthetic.main.item_list_genre_movies.*
+import kotlinx.android.synthetic.main.activity_movie_list.*
 
 class ListGenreMovies : AppCompatActivity(), AdapterListGenre.OnGenreCLickListener {
     private lateinit var viewModelGenre: ViewModelListGenre
@@ -32,16 +31,8 @@ class ListGenreMovies : AppCompatActivity(), AdapterListGenre.OnGenreCLickListen
 
         setupRecyclerView()
         getDataListGenre()
-        alertGenre()
+        alertMovie()
 
-    }
-
-    private fun alertGenre() {
-        edt_search_list_genre_movies.setOnClickListener{
-            Snackbar.make(
-                layout_container_list_genre, "This feature not work, wait soon :)",Snackbar.LENGTH_LONG
-            ).show()
-        }
     }
 
     private fun setupRecyclerView() {
@@ -52,6 +43,12 @@ class ListGenreMovies : AppCompatActivity(), AdapterListGenre.OnGenreCLickListen
         }
     }
 
+    private fun alertMovie() {
+        edt_search_list_genre_movies.setOnClickListener {
+            Snackbar.make(layout_container_list_genre, "This feature not work, wait soon :)",Snackbar.LENGTH_LONG
+            ).show()
+        }
+    }
 
     private fun getDataListGenre() {
         val repository = RepositoryMovies()
@@ -62,31 +59,30 @@ class ListGenreMovies : AppCompatActivity(), AdapterListGenre.OnGenreCLickListen
         viewModelGenre.responseGenre.observe(this, Observer { response ->
             if (response.isSuccessful) {
                 response.body()?.let { adapterGenre.setData(it.genres) }
-
-                edt_search_list_genre_movies.addTextChangedListener(object : TextWatcher {
-                    override fun afterTextChanged(s: Editable?) {
-
-                    }
-
-                    override fun beforeTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        count: Int,
-                        after: Int
-                    ) {
-                    }
-
-                    override fun onTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        before: Int,
-                        count: Int
-                    ) {
-
-                    }
-
-                })
             }
+        })
+
+        edt_search_list_genre_movies.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                adapterGenre.filter.filter(s)
+            }
+
         })
     }
 

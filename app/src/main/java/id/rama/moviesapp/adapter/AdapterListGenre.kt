@@ -1,5 +1,6 @@
 package id.rama.moviesapp.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import id.rama.moviesapp.R
 import id.rama.moviesapp.model.modelgenrelist.ModelListGenreMovies
+import id.rama.moviesapp.model.modelmoviedetail.ModelGenresMovieDetail
 import kotlinx.android.synthetic.main.item_list_genre_movies.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -17,22 +19,22 @@ import kotlin.collections.ArrayList
 class AdapterListGenre(var context: Context, var clickListenerGenre: OnGenreCLickListener) :
     RecyclerView.Adapter<AdapterListGenre.GenreViewHolder>(), Filterable {
     var listGenre = ArrayList<ModelListGenreMovies>()
-    var filterGenreList  = ArrayList<ModelListGenreMovies>()
+    var listGenreAll = ArrayList<ModelListGenreMovies>()
 
 
     inner class GenreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val container = itemView.cv_container_genre_movies
 
         fun bindData(data: ModelListGenreMovies) {
-            with(itemView){
+            with(itemView) {
                 txt_title_list_genre.text = data.name
             }
         }
 
         fun init(item: ModelListGenreMovies, action: OnGenreCLickListener) {
-            with(itemView){
+            with(itemView) {
                 setOnClickListener {
-                    action.onItemClickListener(item,absoluteAdapterPosition)
+                    action.onItemClickListener(item, absoluteAdapterPosition)
                 }
             }
         }
@@ -54,7 +56,8 @@ class AdapterListGenre(var context: Context, var clickListenerGenre: OnGenreCLic
     }
 
     override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {
-        holder.container.animation = AnimationUtils.loadAnimation(context,R.anim.item_animation_fall_down)
+        holder.container.animation =
+            AnimationUtils.loadAnimation(context, R.anim.item_animation_fall_down)
         holder.bindData(listGenre[position])
         holder.init(listGenre[position], clickListenerGenre)
     }
@@ -65,31 +68,31 @@ class AdapterListGenre(var context: Context, var clickListenerGenre: OnGenreCLic
     }
 
     override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(constraint: CharSequence?): FilterResults {
+        return genreFilter
+    }
 
-                val searchString = constraint.toString()
-                if (searchString.isEmpty()) {
-                    filterGenreList = listGenre
-                } else {
-                    val tempFilterList: ArrayList<ModelListGenreMovies> = ArrayList()
-                    for (genreList: ModelListGenreMovies in listGenre) {
-                        if (genreList.name.toLowerCase().contains(searchString)) {
-                            tempFilterList.add(genreList)
-                        }
+    private var genreFilter : Filter = object :Filter(){
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            val filteredGenre : ArrayList<ModelListGenreMovies> = ArrayList()
+            if (constraint == null || constraint.isEmpty()){
+                filteredGenre.addAll(listGenreAll)
+            }else{
+                val filterPattern = constraint.toString().toLowerCase().trim()
+                for (item : ModelListGenreMovies in listGenreAll){
+                    if (item.name.toLowerCase().contains(filterPattern)){
+                        filteredGenre.add(item)
                     }
-                    filterGenreList = tempFilterList
                 }
-                val filterResult = FilterResults()
-                filterResult.values = filterGenreList
-                return filterResult
             }
+            val results = FilterResults()
+            results.values = filteredGenre
+            return results
+        }
 
-            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filterGenreList = results?.values as ArrayList<ModelListGenreMovies>
-                notifyDataSetChanged()
-            }
-
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            listGenre.clear()
+            listGenre.addAll(results!!.values as Collection<ModelListGenreMovies>)
+            notifyDataSetChanged()
         }
     }
 }

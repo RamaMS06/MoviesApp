@@ -24,6 +24,13 @@ class DetailTrailerMovie : AppCompatActivity() {
         setContentView(R.layout.activity_detail_trailer_movie)
 
         getDataTrailer()
+        backActivity()
+    }
+
+    private fun backActivity() {
+        btn_back_movie_list.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun getDataTrailer() {
